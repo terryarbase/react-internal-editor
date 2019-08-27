@@ -23,7 +23,7 @@ const plugins = [
     // index.html 로 의존성 파일들 inject해주는 플러그인
     new HtmlWebpackPlugin({
         filename: 'index.html',
-        title: 'React Design Editor',
+        title: 'React Internal Editor',
     }),
     new CleanWebpackPlugin(pathsToClean, cleanOptions),
 ];
@@ -37,7 +37,7 @@ module.exports = merge(baseConfig, {
             'fabric',
             'antd',
         ],
-        app: ['@babel/polyfill', path.resolve(__dirname, 'src/index.js')],
+        app: ['@babel/polyfill', path.resolve(__dirname, 'src/components/pdfviewer/index.js')],
     },
     output: {
         // entry에 존재하는 app.js, vendor.js로 뽑혀 나온다.

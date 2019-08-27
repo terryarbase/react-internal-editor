@@ -17,8 +17,6 @@ import { i18nClient } from './i18n';
 //     'en-US': enUS,
 // };
 
-
-
 class AppView extends Component {
     constructor(props) {
         super(props);

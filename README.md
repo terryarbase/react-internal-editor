@@ -67,7 +67,7 @@ $ npm start
 2. InternalEditor relies on some endpoints for partially operations.
 
 ```jsx
-import InternalEditor from 'internal-editor';
+import InternalEditor from 'react-internal-editor';
 
 // On Shortcut View Clicking
 onAreaViewClick(selected) {
