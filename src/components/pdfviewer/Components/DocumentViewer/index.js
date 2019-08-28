@@ -2,20 +2,20 @@ import React, { Component } from "react";
 import doEach from 'lodash/forEach';
 // import PropTypes from 'prop-types';
 // components
-import {
-	Document,
-	Page,
-	pdfjs,
-} from 'react-pdf';
-import DocumentControl from './../DocumentControl';
-import OutlineControl from './../../Drawer/Outline';
+// import {
+// 	Document,
+// 	Page,
+// 	pdfjs,
+// } from 'react-pdf';
+// import DocumentControl from './../DocumentControl';
+// import OutlineControl from './../../Drawer/Outline';
 import ImageMapEditor from './../../../imagemap/ImageMapEditor';
 // material-ui
 import { withStyles } from "@material-ui/core/styles";
 import Paper from '@material-ui/core/Paper';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+// pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 const DocumentViewerStyles = () => ({
 	scrollContainer: {
@@ -71,7 +71,7 @@ class DocumentViewer extends Component {
             'onCreateObject',
             'onScaleChanged',
         	// render helpers
-        	'renderMainDocument',
+        	// 'renderMainDocument',
         	'renderLoadingDocument',
         ];
         doEach(funcs, func => this[func] = this[func].bind(this));
@@ -212,35 +212,35 @@ class DocumentViewer extends Component {
     	);
     }
 
-    renderMainDocument() {
-    	if (!this.props.pdf && !this.props.file) {
-    		return (<div />);
-    	}
-    	return (
-            <div>
-        		<Document
-    	        	file={this.props.pdf || this.props.file}
-    				noData={(<div />)}
-    				loading={(<div />)}
-    				onSourceSuccess={this.onDocumentSourceSuccess}
-    				onSourceError={(error) => {
-    					console.log(error.message);
-    				}}
-    				onLoadSuccess={this.onDocumentLoaded}
-    	        >
-    	        	<Page
-    	        		inputRef={r => { this.pageRef = r; }}
-    	        		onLoadProgress={this.onLoadingPage}
-                        onLoadSuccess={this.onLoadedPage}
-    	        		pageNumber={this.state.page}
-                        renderAnnotationLayer={false}
-                        renderTextLayer={false}
-                        scale={this.state.percentage}
-    	        	/>
-    	        </Document>
-            </div>
-    	);
-    }
+    // renderMainDocument() {
+    // 	if (!this.props.pdf && !this.props.file) {
+    // 		return (<div />);
+    // 	}
+    // 	return (
+    //         <div>
+    //     		<Document
+    // 	        	file={this.props.pdf || this.props.file}
+    // 				noData={(<div />)}
+    // 				loading={(<div />)}
+    // 				onSourceSuccess={this.onDocumentSourceSuccess}
+    // 				onSourceError={(error) => {
+    // 					console.log(error.message);
+    // 				}}
+    // 				onLoadSuccess={this.onDocumentLoaded}
+    // 	        >
+    // 	        	<Page
+    // 	        		inputRef={r => { this.pageRef = r; }}
+    // 	        		onLoadProgress={this.onLoadingPage}
+    //                     onLoadSuccess={this.onLoadedPage}
+    // 	        		pageNumber={this.state.page}
+    //                     renderAnnotationLayer={false}
+    //                     renderTextLayer={false}
+    //                     scale={this.state.percentage}
+    // 	        	/>
+    // 	        </Document>
+    //         </div>
+    // 	);
+    // }
 
 	render() {
 		const { classes, pdfCanvasOption={}, preview } = this.props;

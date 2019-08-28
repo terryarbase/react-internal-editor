@@ -6,8 +6,8 @@ import { fabric } from 'fabric';
 import uuid from 'uuid/v4';
 import i18n from 'i18next';
 import debounce from 'lodash/debounce';
-import 'mediaelement';
-import 'mediaelement/build/mediaelementplayer.min.css';
+// import 'mediaelement';
+// import 'mediaelement/build/mediaelementplayer.min.css';
 import interact from 'interactjs';
 import anime from 'animejs';
 
@@ -344,7 +344,6 @@ class Canvas extends Component {
                 dormerMode: true,
                 editable: false,
             });
-            console.log(obj);
             this.zoomHandlers.zoomToDefault(true);
             this.props.onDormerCreate(obj);
             // register event
@@ -1925,54 +1924,54 @@ class Canvas extends Component {
 
         },
         create: (obj, src) => {
-            const { editable } = this.props;
-            const { id, autoplay, muted, loop } = obj;
-            const { left, top } = obj.getBoundingRect();
-            const videoElement = fabric.util.makeElement('video', {
-                id,
-                autoplay,
-                muted,
-                loop,
-                preload: 'none',
-                controls: false,
-            });
-            const { scaleX, scaleY, angle } = obj;
-            const zoom = this.canvas.getZoom();
-            const width = obj.width * scaleX * zoom;
-            const height = obj.height * scaleY * zoom;
-            const video = fabric.util.wrapElement(videoElement, 'div', {
-                id: `${obj.id}_container`,
-                style: `transform: rotate(${angle}deg);
-                        width: ${width}px;
-                        height: ${height}px;
-                        left: ${left}px;
-                        top: ${top}px;
-                        position: absolute;`,
-            });
-            this.container.current.appendChild(video);
-            const player = new MediaElementPlayer(obj.id, {
-                pauseOtherPlayers: false,
-                videoWidth: '100%',
-                videoHeight: '100%',
-                success: (mediaeElement, originalNode, instance) => {
-                    if (editable) {
-                        instance.pause();
-                    }
-                    // https://www.youtube.com/watch?v=bbAQtfoQMp8
-                    // console.log(mediaeElement, originalNode, instance);
-                },
-            });
-            player.setPlayerSize(width, height);
-            player.setSrc(src.src);
-            if (editable) {
-                this.elementHandlers.draggable(video, obj);
-                video.addEventListener('mousedown', (e) => {
-                    this.canvas.setActiveObject(obj);
-                    this.canvas.requestRenderAll();
-                }, false);
-            }
-            obj.setCoords();
-            obj.set('player', player);
+            // const { editable } = this.props;
+            // const { id, autoplay, muted, loop } = obj;
+            // const { left, top } = obj.getBoundingRect();
+            // const videoElement = fabric.util.makeElement('video', {
+            //     id,
+            //     autoplay,
+            //     muted,
+            //     loop,
+            //     preload: 'none',
+            //     controls: false,
+            // });
+            // const { scaleX, scaleY, angle } = obj;
+            // const zoom = this.canvas.getZoom();
+            // const width = obj.width * scaleX * zoom;
+            // const height = obj.height * scaleY * zoom;
+            // const video = fabric.util.wrapElement(videoElement, 'div', {
+            //     id: `${obj.id}_container`,
+            //     style: `transform: rotate(${angle}deg);
+            //             width: ${width}px;
+            //             height: ${height}px;
+            //             left: ${left}px;
+            //             top: ${top}px;
+            //             position: absolute;`,
+            // });
+            // this.container.current.appendChild(video);
+            // const player = new MediaElementPlayer(obj.id, {
+            //     pauseOtherPlayers: false,
+            //     videoWidth: '100%',
+            //     videoHeight: '100%',
+            //     success: (mediaeElement, originalNode, instance) => {
+            //         if (editable) {
+            //             instance.pause();
+            //         }
+            //         // https://www.youtube.com/watch?v=bbAQtfoQMp8
+            //         // console.log(mediaeElement, originalNode, instance);
+            //     },
+            // });
+            // player.setPlayerSize(width, height);
+            // player.setSrc(src.src);
+            // if (editable) {
+            //     this.elementHandlers.draggable(video, obj);
+            //     video.addEventListener('mousedown', (e) => {
+            //         this.canvas.setActiveObject(obj);
+            //         this.canvas.requestRenderAll();
+            //     }, false);
+            // }
+            // obj.setCoords();
+            // obj.set('player', player);
         },
         load: (obj, src) => {
             const { canvas } = this;

@@ -1,7 +1,7 @@
-# React Internal Editor v1.0.0
+# React Internal Editor 1.0.1
 [![npm](https://img.shields.io/npm/v/react-image.svg?style=flat-square)](https://www.npmjs.com/package/react-image) [![npm](https://img.shields.io/npm/l/react-image.svg?style=flat-square)](https://www.npmjs.com/package/react-image) [![npm](https://img.shields.io/npm/dt/react-image.svg?style=flat-square)](https://www.npmjs.com/package/fabric) [![npm](https://img.shields.io/npm/dt/react-image.svg?style=flat-square)](https://salgum1114.github.io/react-design-editor)
 
-React Internal Editor is a easy assignment editor tool for the internal building operations, which is using React.js + ant.design + fabric.js + react-pdf + react-design-editor
+React Internal Editor is a easy assignment editor tool for the internal building operations, which is using React.js + ant.design + fabric.js + react-pdf + react-design-editor + material-ui
 
 # Highlighting Features
 
@@ -59,12 +59,71 @@ InternalEditor requires [Node.js](https://nodejs.org/) v8.0+ to run.
 1. Install the dependencies and devDependencies and start the server.
 
 ```sh
-$ cd internaleditor
+$ cd react-internal-editor
 $ npm install
 $ npm start
 ```
 
-2. InternalEditor relies on some endpoints for partially operations.
+2. Install the latest babel7 dependencies for `react-internal-editor` and preapre the static babel configuration file, and prepare the properly loaders in your project
+
+```sh
+$ npm install @babel/runtime@7.5.5 @babel/preset-env@7.5.5 @babel/core@7.5.5 @babel/preset-react@7.0.0 --save-dev
+```
+
+### .babelrc
+
+```jsx
+{
+    "presets": [
+        "@babel/preset-env", 
+        "@babel/preset-react"
+    ],
+    "plugins": [
+        ["@babel/transform-runtime"]
+    ]
+}
+```
+
+### webpack.config.js
+
+```jsx
+module: {
+    rules: [
+      .....
+      .....
+      .....
+      {
+          // important url loader for the svg fonts in `react-internal-editor`
+          test: /\.(ico|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+          loader: 'url-loader',
+          options: {
+              publicPath: './',
+              name: 'fonts/[hash].[ext]',
+              limit: 10000,
+          },
+      },
+      {
+        test: /\.(css|less)$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'less-loader',  // important less loader for the `react-internal-editor`
+            options: {
+              javascriptEnabled: true,
+            }
+          },
+        ]
+      }
+    ]
+}
+```
+
+3. InternalEditor relies on some endpoints for partially operations.
 
 ```jsx
 import InternalEditor from 'react-internal-editor';
@@ -161,7 +220,7 @@ onExportConfig(type, data, closeCallback) {
 ```
 
 ### Component Options
-Property	|	Type		|	Default		|	Description
+Property    |   Type        |   Default     |   Description
 :-----------------------|:--------------|:--------------|:--------------------------------
 source | object       | undefined     | Required. A source infomation including target id and name for the configuation export use, you can also store it at your own component state. e.g. `{ id: "", name: "" }`
 dataSources | object       | undefined     | Required. A layer configurations toward the source pdf.  e.g. `{ workarea: {}, objects: [], "animations": [], "styles": [], "dataSources": [], }`
@@ -302,16 +361,46 @@ const dataSources = {
     "dataSources": [],
 };
 ```
+## Development
+
+```sh
+$ cd react-internal-editor
+$ npm install
+$ npm start
+```
+Open [http://0.0.0.0:3030](http://0.0.0.0:3030) to view `react-internal-editor`
+
+## Depolyment
+
+```sh
+$ cd react-internal-editor
+$ npm run publish
+```
 
 ## Todos
 
+1. Features
   - Job Assignments Control
   - Area Separation
   - Job Accomplishment
 
+2. Environment 
+  - Migrate to React 16.9.0 with context hooks
+  - Upgrade Material-ui will the latest core set
+  - Remove useless code for 'react-designer-editor'
+
 ## Dependencies
 
 `react-internal-editor` has some external dependencies, which are the usual `react`, `react-dom`, `ant.design`, `material-ui`, `i18next` and `fabric`, as well as `design-editor`.
+
+## Changelogs
+
+#### Verion 1.0.1 (28/08/2019)
+- Downgrade React.js to v16.4.0 from v16.9.0
+- Add publishing script for the distribution release using babel-cil
+- Remove Slider from @material-ui/code, use [react-rangeslider](https://www.npmjs.com/package/react-rangeslider) instead.
+- Remove pdf-lib and react-pdf dependencies
+- Add babel.config.js instead of .babelrc static configuration file
 
 ## License
 

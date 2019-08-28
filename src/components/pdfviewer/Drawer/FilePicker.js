@@ -7,7 +7,6 @@ import Dropzone from 'react-dropzone';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 // material-ui
 import { withStyles } from "@material-ui/core/styles";
-import RootRef from '@material-ui/core/RootRef'
 
 const FilePickerStyles = theme => ({
 	dropContainer: {

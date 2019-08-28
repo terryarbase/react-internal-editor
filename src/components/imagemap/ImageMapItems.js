@@ -312,9 +312,10 @@ class ImageMapItems extends Component {
             minimize: collapse,
         });
         const items = _.filter(this.handlers.transformList(), item => !item.hideMenu);
-        return (<></>
-            /*<div className={className} style={{ display: 'none' }}>
-                <FlexBox flex="1" flexDirection="column" style={{ height: '100%' }}>
+        return (
+            <div className={className} style={{ display: 'none' }}>
+                {
+                /*<FlexBox flex="1" flexDirection="column" style={{ height: '100%' }}>
                     <Scrollbar>
                         <FlexBox flex="1" style={{ overflowY: 'hidden' }}>
                             {
@@ -342,8 +343,9 @@ class ImageMapItems extends Component {
                             }
                         </FlexBox>
                     </Scrollbar>
-                </FlexBox>
-            </div>*/
+                </FlexBox>*/
+                }
+            </div>
         );
     }
 }

@@ -103,7 +103,7 @@ class SavePanel extends Component {
         return (
             <Dialog
                 onClose={this.onClose}
-                maxWidth={'xl'}
+                maxWidth={'lg'}
                 aria-labelledby="simple-dialog-title"
                 open={this.props.open}
             >

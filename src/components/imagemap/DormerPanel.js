@@ -6,47 +6,48 @@ import _ from 'lodash';
 import i18n from 'i18next';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import { Slider } from '@material-ui/core';
+// import { Slider } from '@material-ui/core';
+import Slider from 'react-rangeslider';
 import { withStyles } from '@material-ui/core/styles';
 import Grow from '@material-ui/core/Grow';
 import Popper from '@material-ui/core/Popper';
 
 import Icon from '../icon/Icon';
 import SearchPanel from './panels/SearchPanel';
-
+import 'react-rangeslider/lib/index.css';
 import {
     DownloadFile,
 } from './../../utils/download';
 
-const PrettoSlider = withStyles({
-  root: {
-    color: '#5d1111',
-    height: 8,
-  },
-  thumb: {
-    height: 24,
-    width: 24,
-    backgroundColor: '#fff',
-    border: '2px solid currentColor',
-    marginTop: -8,
-    marginLeft: -12,
-    '&:focus,&:hover,&$active': {
-      boxShadow: 'inherit',
-    },
-  },
-  active: {},
-  valueLabel: {
-    left: 'calc(-50% + 4px)',
-  },
-  track: {
-    height: 8,
-    borderRadius: 4,
-  },
-  rail: {
-    height: 8,
-    borderRadius: 4,
-  },
-})(Slider);
+// const PrettoSlider = withStyles({
+//   root: {
+//     color: '#5d1111',
+//     height: 8,
+//   },
+//   thumb: {
+//     height: 24,
+//     width: 24,
+//     backgroundColor: '#fff',
+//     border: '2px solid currentColor',
+//     marginTop: -8,
+//     marginLeft: -12,
+//     '&:focus,&:hover,&$active': {
+//       boxShadow: 'inherit',
+//     },
+//   },
+//   active: {},
+//   valueLabel: {
+//     left: 'calc(-50% + 4px)',
+//   },
+//   track: {
+//     height: 8,
+//     borderRadius: 4,
+//   },
+//   rail: {
+//     height: 8,
+//     borderRadius: 4,
+//   },
+// })(Slider);
 
 const dormerPickedBg = 'data:image/png;base64,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';
 
@@ -335,7 +336,7 @@ class DormerPanel extends Component {
         );
     }
 
-    changeOpacity = (e, value) => {
+    changeOpacity = value => {
         const {
             selectedItem,
         } = this.props;
@@ -359,18 +360,27 @@ class DormerPanel extends Component {
                 {
                     selectedItem && !!selectedItem.dormerCached && <div 
                     className="rde-editor-dormer-wrapper-slider"
-                >
-                        <PrettoSlider
-                            defaultValue={!isNaN(selectedItem.dormerOpacity) ? selectedItem.dormerOpacity * 100 : 100}
-                            getAriaValueText={this.sliderValue}
-                            aria-labelledby="discrete-slider"
-                            valueLabelDisplay="auto"
-                            step={10}
-                            onChange={this.changeOpacity}
-                            marks
-                            min={40}
-                            max={100}
-                        />
+                >   
+                    <Slider
+                        step={10}
+                        min={40}
+                        max={100}
+                        value={!isNaN(selectedItem.dormerOpacity) ? selectedItem.dormerOpacity * 100 : 100}
+                        onChange={this.changeOpacity}
+                    />
+                        {
+                            /*<PrettoSlider
+                                defaultValue={!isNaN(selectedItem.dormerOpacity) ? selectedItem.dormerOpacity * 100 : 100}
+                                getAriaValueText={this.sliderValue}
+                                aria-labelledby="discrete-slider"
+                                valueLabelDisplay="auto"
+                                step={10}
+                                onChange={this.changeOpacity}
+                                marks
+                                min={40}
+                                max={100}
+                            />*/
+                        }
                     </div>
                 }
                 <div className="rde-editor-dormer-wrapper-header">
