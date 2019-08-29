@@ -325,6 +325,9 @@ class Canvas extends Component {
     };
 
     dormerHandlers = {
+        zoomArea: () => {
+            
+        },
         createDormer: obj => {
             // dormerOpacity: 1,
             obj.set({
@@ -366,9 +369,9 @@ class Canvas extends Component {
             }
 
             if (hide) {
-                html = _.replace(html, new RegExp('{{__hideMode__}}', 'g'), 'hidden');
+                html = _.replace(html, new RegExp('{{__styleMode__}}', 'g'), 'visibility: hidden');
             } else {
-                html = _.replace(html, new RegExp('{{__hideMode__}}', 'g'), 'visible');
+                html = _.replace(html, new RegExp('{{__styleMode__}}', 'g'), 'visibility: visible');
             }
 
             html = _.replace(html, new RegExp('{{__linklabel__}}', 'g'), i18n.t('common.view'));
@@ -3562,6 +3565,7 @@ class Canvas extends Component {
                 y: center.top,
             };
             this.zoomHandlers.zoomToPoint(point, zoomRatio);
+
         },
     }
 

@@ -1,7 +1,7 @@
 # React Internal Editor 1.0.1
 [![npm](https://img.shields.io/npm/v/react-image.svg?style=flat-square)](https://www.npmjs.com/package/react-image) [![npm](https://img.shields.io/npm/l/react-image.svg?style=flat-square)](https://www.npmjs.com/package/react-image) [![npm](https://img.shields.io/npm/dt/react-image.svg?style=flat-square)](https://www.npmjs.com/package/fabric) [![npm](https://img.shields.io/npm/dt/react-image.svg?style=flat-square)](https://salgum1114.github.io/react-design-editor)
 
-React Internal Editor is a easy assignment editor tool for the internal building operations, which is using React.js + ant.design + fabric.js + react-pdf + react-design-editor + material-ui
+React Internal Editor is an assignment editor tool for the internal building operations, which is using React.js + ant.design + fabric.js + react-pdf + react-design-editor + material-ui
 
 # Highlighting Features
 
@@ -13,11 +13,25 @@ React Internal Editor is a easy assignment editor tool for the internal building
   - Layer Panel (Grouping, Duplication)
   - Floor Panel
 
+## Screenshots
+
+### Floor Panel
+![Floor Panel](http://dev.4d.com.hk/internaleditor/images/image1.png)
+### Shortcut Link Panel
+![Floor Panel](http://dev.4d.com.hk/internaleditor/images/image2.png)
+### Region Comparsion
+![Floor Panel](http://dev.4d.com.hk/internaleditor/images/image3.png)
+
+## Demo
+
+Please refer to the demo link: [http://dev.4d.com.hk/internaleditor/](http://dev.4d.com.hk/internaleditor/), or download the demo source [react-internal-editor-demo](http://dev.4d.com.hk/internaleditor/src/react-internal-editor-demo.zip)
+
 # Important Concept Behinds
 
 The project was using react-pdf and fabricjs to edit the pdf file, while the huge performance challenge for the browser loading and loading the pdf in mobile browser, thus we has changed to use image source control for replacing the pdf manipulation in client's browser. Also, you need to reference the followings by doing the stuffs at the server-side before getting the start for this plugin
 
  - Convert all of pages from the PDF document after upload
+ Each of page in the PDF document should be separated to the piece of image and the image should be maintained under a correct relationship in the backend-side
 ```jsx
 const PDFImage = require("pdf-image").PDFImage;
 const pdfImage = new PDFImage('./floors.pdf');
@@ -29,28 +43,28 @@ pdfImage.convertFile().then(function (imagePaths) {
 See [pdf-image](https://www.npmjs.com/package/pdf-image) for more info and all of the dependencies for the `pdf-image`.
 
   - Version Comparsion Cropping
+  Use your logic for cropping the region from the full image for any pdf, the followings only for the reference
 ```jsx
-const gm = require('gm').subClass({
-    imageMagick: true,
-    appPath: '/usr/local/bin/',
-});
+const sharp = require('sharp');
+const fs    = require('fs');
 // read from the local directory or remote server using (http request)
 const cacheFilePath = './floors.pdf';
-gm(cacheFilePath).crop(
-    width,    // width, sending from InternalEditor
-    height,    // height, sending from InternalEditor
-    left,    // x coordinate, sending from InternalEditor
-    top,    // y coordinate, sending from InternalEditor
-).stream((err, stdout, stderr) => {
-    // pipe as the write steam to the client-side
-    stdout.pipe(res);
-    req.on('end', () => {
-        // remove the cache file if the file is downloaded from the remote server
-        fs.unlinkSync(cacheFilePath);
+sharp(fs.readFileSync(cacheFilePath))
+    .extract({
+        width: Number(width) || 400,    // width
+        height: Number(height) || 300,    // height
+        left: Number(left) || 0,    // left
+        top: Number(top) || 1,    // top
+    })
+    .toFile(cacheFilePath)
+    .then(() => {
+        res.download(cacheFilePath);
+        req.on('end', () => {
+            fs.unlinkSync(cacheFilePath);
+        });
     });
-});
 ```
-See [gm](https://www.npmjs.com/package/gm) for more info and all of the dependencies for the `gm`.
+See [sharp](https://www.npmjs.com/package/sharp) for more info and all of the dependencies for the `sharp`.
 
 ## Getting started
 
@@ -394,6 +408,10 @@ $ npm run publish
 `react-internal-editor` has some external dependencies, which are the usual `react`, `react-dom`, `ant.design`, `material-ui`, `i18next` and `fabric`, as well as `design-editor`.
 
 ## Changelogs
+
+#### Verion 1.0.2 (29/08/2019)
+- Add Demo Project
+- Fix the issue fot the use of [react-rangeslider](https://www.npmjs.com/package/react-rangeslider) at the Region Comparsion Panel.
 
 #### Verion 1.0.1 (28/08/2019)
 - Downgrade React.js to v16.4.0 from v16.9.0
